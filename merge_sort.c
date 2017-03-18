@@ -75,19 +75,11 @@ int intercala(int p, int q, int r, int num[]){
 
 		if(num[i] > num[j]){
 
-			num_[k] = num[j];
-
-			k++;
-
-			j++;
+			num_[k++] = num[j++];
 
 		}else{
 
-			num_[k] = num[i];
-
-			k++;
-
-			i++;
+			num_[k++] = num[i++];
 
 		}
 
@@ -95,21 +87,13 @@ int intercala(int p, int q, int r, int num[]){
 
 	while(i<q){
 
-		num_[k] = num[i];
-
-		k++;
-
-		i++;
+		num_[k++] = num[i++];
 
 	}
 
 	while(j<r){
 
-		num_[k] = num[j];
-
-		k++;
-
-		j++;
+		num_[k++] = num[j++];
 
 	}
 
