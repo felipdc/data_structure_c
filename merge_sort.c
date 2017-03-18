@@ -2,46 +2,59 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <math.h>
 
 int intercala();
 
 int merge_sort();
 
+int export_time_to_csv();
+
 int main(){
 
 	int i, size;
 
+	int j = 0;
+	
+	int count = 1;
+
 	int *num;
 
-	printf("Choose size: \n");
+	while(count<=(pow(10,9))){
 
-	scanf("%d", &size);
+		size = count;
 
-	num = malloc(sizeof(int)*size);
+		num = malloc(sizeof(int)*size);
 
-	for(i=0; i<=size-1; i++){
+		for(i=0; i<=size-1; i++){
 
-		num[i] = rand() % 100;
+			num[i] = rand() % 100;
+
+		}
+
+		clock_t begin = clock(); //INICIANDO CONTAGEM DO TEMPO
+
+		merge_sort(0,size,num); //INICIAR MERGE SORT
+
+		clock_t end = clock(); // FIM DA CONTAGEM DO TEMPO
+
+		double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+
+		printf("Merge sort com %d numeros executado em %f segundos ",size, time_spent);
+
+		printf(" \n \n");
+
+		export_time_to_csv(size, time_spent);
+
+		free(num);
+
+		count = pow(10, j);
+
+		j++;
 
 	}
 
-	for(i=0;i<size;i++){
 
-		printf("%d ", num[i]);
-
-	}
-
-	printf("\n");
-
-	merge_sort(0,size,num);
-
-	for(i=0;i<size;i++){
-
-		printf("%d ", num[i]);
-
-	}
-
-	printf("\n");
 
 }
 
@@ -128,6 +141,25 @@ int merge_sort(int p, int r, int num[]){
 	}
 
 
+
+}
+
+
+int export_time_to_csv(int size, double time_spent){
+
+	FILE *fp;
+
+	fp = fopen("execute_time_merge_sort.csv", "a");
+
+	if(!fp){
+
+		printf("Could not open file \n\n\n");
+
+	}
+
+	fprintf(fp, "%d, %f \n", size, time_spent);	
+
+	fclose(fp);
 
 }
 
